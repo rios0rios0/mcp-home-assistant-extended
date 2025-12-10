@@ -1,12 +1,13 @@
 #!/usr/bin/env python3
-"""
-Test script to verify Home Assistant API connectivity and automation endpoints.
+"""Test script to verify Home Assistant API connectivity and automation endpoints.
+
 Run this before setting up the MCP server to ensure everything works.
 """
 
 import asyncio
 import os
 import sys
+
 import aiohttp
 from dotenv import load_dotenv
 
@@ -23,11 +24,11 @@ if not HA_TOKEN:
 async def test_connection():
     """Test basic connection to Home Assistant."""
     print(f"Testing connection to {HA_URL}...")
-    
+
     try:
         async with aiohttp.ClientSession() as session:
             headers = {"Authorization": f"Bearer {HA_TOKEN}"}
-            
+
             # Test API root
             async with session.get(f"{HA_URL}/api/", headers=headers) as response:
                 if response.status == 200:
@@ -37,27 +38,29 @@ async def test_connection():
                 else:
                     print(f"✗ API connection failed: {response.status}")
                     return False
-            
+
             # Test automation endpoint
             async with session.get(f"{HA_URL}/api/automation", headers=headers) as response:
                 if response.status == 200:
                     automations = await response.json()
                     print(f"✓ Automation API accessible")
                     print(f"  Found {len(automations)} automations")
-                    
+
                     if automations:
                         print("\n  Sample automations:")
                         for auto in automations[:3]:
-                            print(f"    - {auto.get('alias', auto.get('id', 'Unknown'))} "
-                                  f"(ID: {auto.get('id', 'N/A')}, "
-                                  f"Enabled: {auto.get('enabled', True)})")
+                            print(
+                                f"    - {auto.get('alias', auto.get('id', 'Unknown'))} "
+                                f"(ID: {auto.get('id', 'N/A')}, "
+                                f"Enabled: {auto.get('enabled', True)})"
+                            )
                     return True
                 else:
                     print(f"✗ Automation API failed: {response.status}")
                     text = await response.text()
                     print(f"  Response: {text}")
                     return False
-                    
+
     except aiohttp.ClientError as e:
         print(f"✗ Connection error: {e}")
         print("\nTroubleshooting:")
@@ -73,44 +76,44 @@ async def test_connection():
 async def test_create_automation():
     """Test creating a test automation."""
     print("\nTesting automation creation...")
-    
+
     test_automation = {
         "alias": "MCP Test Automation",
         "description": "Test automation created by MCP server",
         "trigger": [
             {
                 "platform": "time",
-                "at": "12:00:00"
+                "at": "12:00:00",
             }
         ],
         "action": [
             {
                 "service": "system_log.write",
                 "data": {
-                    "message": "MCP test automation triggered"
-                }
+                    "message": "MCP test automation triggered",
+                },
             }
         ],
-        "mode": "single"
+        "mode": "single",
     }
-    
+
     try:
         async with aiohttp.ClientSession() as session:
             headers = {
                 "Authorization": f"Bearer {HA_TOKEN}",
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
             }
-            
+
             async with session.post(
                 f"{HA_URL}/api/automation",
                 headers=headers,
-                json=test_automation
+                json=test_automation,
             ) as response:
                 if response.status in [200, 201]:
                     result = await response.json()
                     print(f"✓ Test automation created successfully")
                     print(f"  Automation ID: {result.get('id', 'N/A')}")
-                    return result.get('id')
+                    return result.get("id")
                 else:
                     text = await response.text()
                     print(f"✗ Failed to create automation: {response.status}")
@@ -125,16 +128,16 @@ async def test_delete_automation(automation_id):
     """Test deleting the test automation."""
     if not automation_id:
         return
-    
+
     print(f"\nCleaning up test automation ({automation_id})...")
-    
+
     try:
         async with aiohttp.ClientSession() as session:
             headers = {"Authorization": f"Bearer {HA_TOKEN}"}
-            
+
             async with session.delete(
                 f"{HA_URL}/api/automation/{automation_id}",
-                headers=headers
+                headers=headers,
             ) as response:
                 if response.status == 200:
                     print("✓ Test automation deleted successfully")
@@ -150,22 +153,22 @@ async def main():
     print("Home Assistant Automation API Test")
     print("=" * 60)
     print()
-    
+
     # Test connection
     if not await test_connection():
         print("\n❌ Connection test failed. Please fix issues before proceeding.")
         sys.exit(1)
-    
+
     # Test creating automation (optional)
     print("\n" + "=" * 60)
     create_test = input("Create a test automation? (y/N): ").strip().lower()
-    if create_test == 'y':
+    if create_test == "y":
         automation_id = await test_create_automation()
         if automation_id:
             delete_test = input("\nDelete test automation? (Y/n): ").strip().lower()
-            if delete_test != 'n':
+            if delete_test != "n":
                 await test_delete_automation(automation_id)
-    
+
     print("\n" + "=" * 60)
     print("✓ All tests passed! You can now use the MCP server.")
     print("=" * 60)

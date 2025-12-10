@@ -11,6 +11,14 @@ __pycache__/
 venv/
 env/
 ENV/
+.python-version
+
+# PDM
+.pdm.toml
+.pdm-python
+.pdm-build/
+.pdm_cache/
+.pdm-python.json
 
 # IDE
 .vscode/
@@ -24,3 +32,8 @@ ENV/
 # OS
 .DS_Store
 Thumbs.db
+
+# Distribution / packaging
+dist/
+build/
+*.egg-info/

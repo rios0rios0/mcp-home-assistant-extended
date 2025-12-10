@@ -1,9 +1,12 @@
 {
   "mcpServers": {
     "home-assistant-automations": {
-      "command": "python",
+      "command": "pdm",
       "args": [
-        "/path/to/mcp_ha_automations/server.py"
+        "run",
+        "python",
+        "-m",
+        "mcp_ha_extended.server"
       ],
       "env": {
         "HA_URL": "http://homeassistant.local:8123",
