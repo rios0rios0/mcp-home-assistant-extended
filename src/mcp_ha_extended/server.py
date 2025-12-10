@@ -19,8 +19,11 @@ from mcp.types import TextContent, Tool
 HA_URL = os.getenv("HA_URL", "http://homeassistant.local:8123")
 HA_TOKEN = os.getenv("HA_TOKEN", "")
 
-if not HA_TOKEN:
-    raise ValueError("HA_TOKEN environment variable must be set")
+
+def _check_ha_token():
+    """Check if HA_TOKEN is set, raise error if not."""
+    if not HA_TOKEN:
+        raise ValueError("HA_TOKEN environment variable must be set")
 
 # MCP Server instance
 server = Server("home-assistant-automations")
@@ -28,6 +31,7 @@ server = Server("home-assistant-automations")
 
 async def ha_api_call(method: str, endpoint: str, data: dict | None = None) -> dict:
     """Make an authenticated API call to Home Assistant."""
+    _check_ha_token()
     url = f"{HA_URL}/api{endpoint}"
     headers = {
         "Authorization": f"Bearer {HA_TOKEN}",
@@ -287,6 +291,7 @@ async def call_tool(name: str, arguments: dict) -> Sequence[TextContent]:
 
 async def main():
     """Run the MCP server."""
+    _check_ha_token()
     async with stdio_server() as (read_stream, write_stream):
         await server.run(
             read_stream,

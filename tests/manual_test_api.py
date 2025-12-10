@@ -2,6 +2,7 @@
 """Test script to verify Home Assistant API connectivity and automation endpoints.
 
 Run this before setting up the MCP server to ensure everything works.
+This is a standalone script, not a pytest test file.
 """
 
 import asyncio
@@ -11,26 +12,34 @@ import sys
 import aiohttp
 from dotenv import load_dotenv
 
-load_dotenv()
+# Only run if executed directly, not when imported by pytest
+if __name__ == "__main__":
+    load_dotenv()
 
 HA_URL = os.getenv("HA_URL", "http://homeassistant.local:8123")
 HA_TOKEN = os.getenv("HA_TOKEN", "")
 
-if not HA_TOKEN:
-    print("ERROR: HA_TOKEN not set. Please set it in .env or environment variables.")
-    sys.exit(1)
+if __name__ == "__main__":
+    if not HA_TOKEN:
+        print("ERROR: HA_TOKEN not set. Please set it in .env or environment variables.")
+        sys.exit(1)
 
 
 async def test_connection():
     """Test basic connection to Home Assistant."""
-    print(f"Testing connection to {HA_URL}...")
+    # Get values at runtime to avoid import-time errors
+    load_dotenv()
+    ha_url = os.getenv("HA_URL", "http://homeassistant.local:8123")
+    ha_token = os.getenv("HA_TOKEN", "")
+    
+    print(f"Testing connection to {ha_url}...")
 
     try:
         async with aiohttp.ClientSession() as session:
-            headers = {"Authorization": f"Bearer {HA_TOKEN}"}
+            headers = {"Authorization": f"Bearer {ha_token}"}
 
             # Test API root
-            async with session.get(f"{HA_URL}/api/", headers=headers) as response:
+            async with session.get(f"{ha_url}/api/", headers=headers) as response:
                 if response.status == 200:
                     print("✓ API connection successful")
                     data = await response.json()
@@ -40,7 +49,7 @@ async def test_connection():
                     return False
 
             # Test automation endpoint
-            async with session.get(f"{HA_URL}/api/automation", headers=headers) as response:
+            async with session.get(f"{ha_url}/api/automation", headers=headers) as response:
                 if response.status == 200:
                     automations = await response.json()
                     print(f"✓ Automation API accessible")
@@ -75,6 +84,10 @@ async def test_connection():
 
 async def test_create_automation():
     """Test creating a test automation."""
+    load_dotenv()
+    ha_url = os.getenv("HA_URL", "http://homeassistant.local:8123")
+    ha_token = os.getenv("HA_TOKEN", "")
+    
     print("\nTesting automation creation...")
 
     test_automation = {
@@ -100,12 +113,12 @@ async def test_create_automation():
     try:
         async with aiohttp.ClientSession() as session:
             headers = {
-                "Authorization": f"Bearer {HA_TOKEN}",
+                "Authorization": f"Bearer {ha_token}",
                 "Content-Type": "application/json",
             }
 
             async with session.post(
-                f"{HA_URL}/api/automation",
+                f"{ha_url}/api/automation",
                 headers=headers,
                 json=test_automation,
             ) as response:
@@ -126,6 +139,10 @@ async def test_create_automation():
 
 async def test_delete_automation(automation_id):
     """Test deleting the test automation."""
+    load_dotenv()
+    ha_url = os.getenv("HA_URL", "http://homeassistant.local:8123")
+    ha_token = os.getenv("HA_TOKEN", "")
+    
     if not automation_id:
         return
 
@@ -133,10 +150,10 @@ async def test_delete_automation(automation_id):
 
     try:
         async with aiohttp.ClientSession() as session:
-            headers = {"Authorization": f"Bearer {HA_TOKEN}"}
+            headers = {"Authorization": f"Bearer {ha_token}"}
 
             async with session.delete(
-                f"{HA_URL}/api/automation/{automation_id}",
+                f"{ha_url}/api/automation/{automation_id}",
                 headers=headers,
             ) as response:
                 if response.status == 200:

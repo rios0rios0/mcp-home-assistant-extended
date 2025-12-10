@@ -50,6 +50,7 @@ version = {source = "file", path = "src/mcp_ha_extended/__init__.py"}
 includes = [
     "src/mcp_ha_extended",
 ]
+python_platform = "linux_aarch64"
 
 [tool.pdm.dev-dependencies]
 dev = [
