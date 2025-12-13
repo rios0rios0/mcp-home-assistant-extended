@@ -1,23 +1,60 @@
-# Home Assistant Automation MCP Server
+# MCP HA Extended
 
-This is a custom MCP (Model Context Protocol) server that extends Home Assistant capabilities to support creating, editing, and listing automations.
+A Model Context Protocol (MCP) server that extends Home Assistant capabilities to support automation management. Available as both a standalone Python application and a Home Assistant addon.
 
-## Overview
+## Features
 
-The existing Home Assistant MCP server provides device control but doesn't support automation management. This server wraps Home Assistant's REST API to provide automation CRUD operations.
+- ✅ List all automations
+- ✅ Get automation details
+- ✅ Create new automations from YAML
+- ✅ Update existing automations
+- ✅ Delete automations
+- ✅ Trigger automations manually
+- ✅ Enable/disable automations
+
+## Quick Start
+
+### As a Home Assistant Addon (Recommended)
+
+1. Add repository: `https://github.com/rios0rios0/mcp-home-assistant-extended`
+2. Install "MCP HA Extended" from the addon store
+3. Configure with your Home Assistant URL and access token
+4. Use with any MCP-compatible client (like Cursor IDE)
+
+See [Addon Installation Guide](.docs/ADDON_INSTALLATION.md) for detailed instructions.
+
+### As a Standalone Python Application
+
+1. Install dependencies: `pdm install`
+2. Set environment variables: `HA_URL` and `HA_TOKEN`
+3. Run: `pdm run python -m mcp_ha_extended.server`
+4. Configure your MCP client to use the server
+
+See [Quick Start Guide](.docs/QUICK_START.md) for a 5-minute setup, or [Setup Guide](.docs/SETUP.md) for detailed instructions.
+
+## Documentation
+
+All documentation is organized in the [`.docs`](.docs/) folder:
+
+- **[Documentation Index](.docs/SUMMARY.md)** - Start here for navigation
+- **[Quick Start](.docs/QUICK_START.md)** - Get running in 5 minutes
+- **[Addon Installation](.docs/ADDON_INSTALLATION.md)** - Install as Home Assistant addon
+- **[Setup Guide](.docs/SETUP.md)** - Detailed development setup
+- **[Usage Examples](.docs/USAGE_EXAMPLES.md)** - Code examples and use cases
+- **[Implementation Guide](.docs/IMPLEMENTATION_GUIDE.md)** - Technical details
 
 ## Architecture
 
 ```
 ┌─────────────────┐
-│   Cursor/IDE    │
-│   (MCP Client)  │
+│   MCP Client    │  (e.g., Cursor IDE)
+│                 │
 └────────┬────────┘
          │ MCP Protocol
          │
 ┌────────▼─────────────────────────┐
-│  Custom HA Automation MCP Server  │
-│  (Python - this project)          │
+│  MCP HA Extended Server          │
+│  (Python - this project)         │
 └────────┬─────────────────────────┘
          │ HTTP REST API
          │
@@ -28,56 +65,32 @@ The existing Home Assistant MCP server provides device control but doesn't suppo
 └─────────────────┘
 ```
 
-## Home Assistant REST API Endpoints
-
-Home Assistant provides these automation endpoints:
-
-- `GET /api/automation` - List all automations
-- `GET /api/automation/{automation_id}` - Get specific automation
-- `POST /api/automation` - Create new automation
-- `PUT /api/automation/{automation_id}` - Update automation
-- `DELETE /api/automation/{automation_id}` - Delete automation
-- `POST /api/automation/{automation_id}/trigger` - Trigger automation manually
-
-## Implementation Options
-
-### Option 1: Extend Existing MCP Server (Recommended)
-If you have access to the Home Assistant MCP server source code, add new tools directly.
-
-### Option 2: Create Standalone MCP Server (This Implementation)
-Create a separate MCP server that only handles automations, running alongside the existing HA MCP server.
-
-### Option 3: Fork and Extend
-Fork the existing Home Assistant MCP server and add automation tools.
-
-## Prerequisites
+## Requirements
 
 - Python 3.10+
 - Home Assistant instance with REST API enabled
 - Long-lived access token from Home Assistant
-- MCP SDK (for Python)
+- MCP-compatible client (e.g., Cursor IDE)
 
-## Setup Instructions
+## Installation Methods
 
-1. Install dependencies:
-```bash
-pip install mcp aiohttp python-dotenv
-```
+### Option 1: Home Assistant Addon (Recommended)
 
-2. Configure environment variables:
-```bash
-export HA_URL="http://homeassistant.local:8123"
-export HA_TOKEN="your_long_lived_access_token"
-```
+Easiest installation method. The addon is automatically built and published to Docker Hub.
 
-3. Run the MCP server:
-```bash
-python mcp_ha_automations/server.py
-```
+**Repository**: `https://github.com/rios0rios0/mcp-home-assistant-extended`
 
-4. Configure Cursor to use this MCP server (add to Cursor settings)
+See [Addon Installation Guide](.docs/ADDON_INSTALLATION.md) for details.
 
-## MCP Tools Provided
+### Option 2: Standalone Python Application
+
+For development or when you don't want to use Home Assistant addons.
+
+See [Setup Guide](.docs/SETUP.md) for installation instructions.
+
+## MCP Tools
+
+Once configured, you'll have access to these tools:
 
 1. **list_automations** - List all automations
 2. **get_automation** - Get details of a specific automation
@@ -87,3 +100,51 @@ python mcp_ha_automations/server.py
 6. **trigger_automation** - Manually trigger an automation
 7. **enable_automation** - Enable an automation
 8. **disable_automation** - Disable an automation
+
+See [Usage Examples](.docs/USAGE_EXAMPLES.md) for detailed examples.
+
+## Development
+
+### Prerequisites
+
+- Python 3.10+
+- [PDM](https://pdm.fming.dev/) for dependency management
+
+### Setup
+
+```bash
+# Install dependencies
+pdm install
+
+# Run tests
+pdm run pytest
+
+# Run the server
+pdm run python -m mcp_ha_extended.server
+```
+
+See [Setup Guide](.docs/SETUP.md) and [PDM Setup](.docs/PDM_SETUP.md) for more details.
+
+### Building the Addon
+
+The addon is automatically built via GitHub Actions. See [Addon Build Guide](.docs/ADDON_BUILD.md) for manual build instructions and GitHub Actions setup.
+
+## Contributing
+
+Contributions are welcome! Please read the [Implementation Guide](.docs/IMPLEMENTATION_GUIDE.md) to understand the architecture before contributing.
+
+## License
+
+MIT License - see [LICENSE](LICENSE) file for details.
+
+## Links
+
+- **GitHub Repository**: https://github.com/rios0rios0/mcp-home-assistant-extended
+- **Docker Hub**: rios0rios0/mcp-home-assistant-extended
+- **Documentation**: [.docs/SUMMARY.md](.docs/SUMMARY.md)
+
+## Support
+
+- Check the [troubleshooting sections](.docs/SETUP.md#troubleshooting) in the documentation
+- Review [Usage Examples](.docs/USAGE_EXAMPLES.md) for common patterns
+- Open an issue on GitHub for bugs or feature requests

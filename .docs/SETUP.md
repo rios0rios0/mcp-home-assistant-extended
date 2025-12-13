@@ -115,23 +115,11 @@ Once configured, you should be able to use these tools in Cursor:
 - Verify your token has proper permissions
 - Ensure Home Assistant REST API is enabled (it is by default)
 
-## Alternative: Direct API Integration
+## Related Documentation
 
-If you prefer not to use MCP, you can also create a simple Python script that directly calls the Home Assistant API:
-
-```python
-import aiohttp
-import asyncio
-
-async def list_automations():
-    url = "http://homeassistant.local:8123/api/automation"
-    headers = {"Authorization": f"Bearer {HA_TOKEN}"}
-    
-    async with aiohttp.ClientSession() as session:
-        async with session.get(url, headers=headers) as response:
-            return await response.json()
-
-# Usage
-automations = asyncio.run(list_automations())
-print(automations)
-```
+- [Quick Start Guide](QUICK_START.md) - Fast setup guide
+- [Usage Examples](USAGE_EXAMPLES.md) - Code examples
+- [PDM Setup](PDM_SETUP.md) - Python dependency management
+- [Implementation Guide](IMPLEMENTATION_GUIDE.md) - Technical details
+- [Addon Installation](ADDON_INSTALLATION.md) - Install as Home Assistant addon
+- [Documentation Index](SUMMARY.md) - Complete documentation navigation

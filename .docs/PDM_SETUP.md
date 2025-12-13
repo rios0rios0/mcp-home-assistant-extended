@@ -87,3 +87,10 @@ All project configuration is in `pyproject.toml`, including:
 - Development dependencies
 - Build configuration
 - Tool configurations (black, ruff, pytest)
+
+## Related Documentation
+
+- [Setup Guide](SETUP.md) - Complete development setup
+- [Quick Start Guide](QUICK_START.md) - Fast setup guide
+- [Implementation Guide](IMPLEMENTATION_GUIDE.md) - Technical details
+- [Documentation Index](SUMMARY.md) - Complete documentation navigation

@@ -185,3 +185,11 @@ If you extend the official Home Assistant MCP server:
    - Clear description
    - Tests
    - Documentation updates
+
+## Related Documentation
+
+- [Setup Guide](SETUP.md) - Development setup instructions
+- [PDM Setup](PDM_SETUP.md) - Python dependency management
+- [Usage Examples](USAGE_EXAMPLES.md) - Code examples
+- [Addon Structure](ADDON_STRUCTURE.md) - Addon architecture
+- [Documentation Index](SUMMARY.md) - Complete documentation navigation

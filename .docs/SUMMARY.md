@@ -1,144 +1,117 @@
-# Summary: Adding Automation Management to MCP
+# Documentation Index
 
-## The Problem
+Welcome to the MCP HA Extended documentation. This index helps you navigate all available documentation.
 
-The existing Home Assistant MCP server provides device control (turn lights on/off, control media players) but **does not support automation management** (create, edit, list automations).
+## 📚 Quick Navigation
 
-## The Solution
+### For End Users
 
-We've created a **custom MCP server** that wraps Home Assistant's REST API to provide automation management tools.
+- **[Quick Start Guide](QUICK_START.md)** - Get up and running in 5 minutes
+- **[Addon Installation](ADDON_INSTALLATION.md)** - Install as a Home Assistant addon
+- **[Usage Examples](USAGE_EXAMPLES.md)** - See how to use the MCP tools
 
-## What Was Created
+### For Developers
 
-### Core Files
+- **[Setup Guide](SETUP.md)** - Detailed development setup instructions
+- **[PDM Setup](PDM_SETUP.md)** - Python dependency management with PDM
+- **[Implementation Guide](IMPLEMENTATION_GUIDE.md)** - Technical deep dive into the implementation
 
-1. **`server.py`** - The MCP server implementation
-   - 8 tools for automation management
-   - Handles API communication with Home Assistant
-   - Error handling and validation
+### For Addon Maintainers
 
-2. **`requirements.txt`** - Python dependencies
-   - MCP SDK
-   - aiohttp for HTTP requests
-   - PyYAML for YAML parsing
+- **[Addon Structure](ADDON_STRUCTURE.md)** - Understanding the addon architecture
+- **[Addon Build Guide](ADDON_BUILD.md)** - Building and deploying the addon
+- **[Addon Setup Summary](ADDON_SETUP_SUMMARY.md)** - Overview of addon files and configuration
 
-3. **`test_api.py`** - Testing script
-   - Verifies HA connectivity
-   - Tests automation endpoints
-   - Helps debug configuration issues
+## 📖 Documentation Overview
 
-### Documentation
+### Getting Started
 
-4. **`README.md`** - Overview and architecture
-5. **`QUICK_START.md`** - 5-minute setup guide
-6. **`SETUP.md`** - Detailed setup instructions
-7. **`IMPLEMENTATION_GUIDE.md`** - Technical deep dive
-8. **`USAGE_EXAMPLES.md`** - Code examples
-9. **`config_example.json`** - Cursor configuration example
+| Document | Purpose | Audience |
+|----------|---------|----------|
+| [Quick Start Guide](QUICK_START.md) | Fast setup in 5 minutes | End users |
+| [Setup Guide](SETUP.md) | Detailed setup with troubleshooting | Developers |
+| [PDM Setup](PDM_SETUP.md) | Python dependency management | Developers |
 
-## Available Tools
+### Usage
 
-Once set up, you'll have these MCP tools:
+| Document | Purpose | Audience |
+|----------|---------|----------|
+| [Usage Examples](USAGE_EXAMPLES.md) | Code examples and use cases | All users |
+| [Implementation Guide](IMPLEMENTATION_GUIDE.md) | Technical implementation details | Developers |
 
-1. ✅ **list_automations** - List all automations
-2. ✅ **get_automation** - Get automation details
-3. ✅ **create_automation** - Create from YAML
-4. ✅ **update_automation** - Update existing
-5. ✅ **delete_automation** - Delete automation
-6. ✅ **trigger_automation** - Manually trigger
-7. ✅ **enable_automation** - Enable automation
-8. ✅ **disable_automation** - Disable automation
+### Home Assistant Addon
 
-## How It Works
+| Document | Purpose | Audience |
+|----------|---------|----------|
+| [Addon Installation](ADDON_INSTALLATION.md) | How to install and configure the addon | End users |
+| [Addon Structure](ADDON_STRUCTURE.md) | Addon architecture and file structure | Developers |
+| [Addon Build Guide](ADDON_BUILD.md) | Building and deploying with GitHub Actions | Maintainers |
+| [Addon Setup Summary](ADDON_SETUP_SUMMARY.md) | Overview of addon components | Developers |
 
-```
-┌─────────────┐
-│   Cursor    │  ← You interact here
-└──────┬──────┘
-       │ MCP Protocol
-       │
-┌──────▼──────────────────┐
-│  Custom MCP Server      │  ← server.py
-│  (Python)               │
-└──────┬──────────────────┘
-       │ HTTP REST API
-       │
-┌──────▼──────────────┐
-│ Home Assistant      │
-│ /api/automation     │
-└─────────────────────┘
-```
+## 🎯 Common Tasks
 
-## Quick Setup
+### I want to...
 
-1. **Install dependencies**: `pip install -r requirements.txt`
-2. **Set environment variables**: `HA_URL` and `HA_TOKEN`
-3. **Test connection**: `python test_api.py`
-4. **Configure Cursor**: Add server to MCP config
-5. **Use it!**: Ask Cursor to manage your automations
+**...use this as a Home Assistant addon**
+→ Start with [Addon Installation](ADDON_INSTALLATION.md)
 
-## Next Steps
+**...develop or modify the code**
+→ Read [Setup Guide](SETUP.md) and [PDM Setup](PDM_SETUP.md)
 
-### Immediate
-1. Get your Home Assistant access token
-2. Run `test_api.py` to verify connectivity
-3. Configure Cursor with the server
+**...understand how it works**
+→ Check [Implementation Guide](IMPLEMENTATION_GUIDE.md)
 
-### Short-term
-1. Start using the tools in Cursor
-2. Create/update automations via MCP
-3. Integrate into your workflow
+**...see examples**
+→ Browse [Usage Examples](USAGE_EXAMPLES.md)
 
-### Long-term
-1. Consider extending the official HA MCP server
-2. Add more features (bulk operations, templates, etc.)
-3. Contribute back to the community
+**...build and deploy the addon**
+→ Follow [Addon Build Guide](ADDON_BUILD.md)
 
-## Alternative Approaches
+**...get started quickly**
+→ Jump to [Quick Start Guide](QUICK_START.md)
 
-### Option A: Extend Existing Server (Best Long-term)
-If you have access to the Home Assistant MCP server source:
-- Add automation tools directly
-- Single server to manage
-- Better integration
+## 📋 Document Descriptions
 
-### Option B: Standalone Server (Current Implementation)
-- Quick to implement
-- No need to modify existing code
-- Can run alongside existing server
+### [Quick Start Guide](QUICK_START.md)
+Fast-track setup guide to get automation management working in 5 minutes. Perfect for first-time users who want to see results quickly.
 
-### Option C: Direct API Integration
-Skip MCP entirely and use Python scripts:
-- Simpler for one-off tasks
-- Less integration with AI tools
-- More manual work
+### [Setup Guide](SETUP.md)
+Comprehensive setup instructions with detailed steps, troubleshooting tips, and alternative approaches. Essential reading for developers.
 
-## Key Files Reference
+### [PDM Setup](PDM_SETUP.md)
+Guide to using PDM (Python Dependency Manager) for this project. Covers installation, usage, and best practices.
 
-| File | Purpose |
-|------|---------|
-| `server.py` | Main MCP server implementation |
-| `test_api.py` | Test HA connectivity |
-| `QUICK_START.md` | Fast setup guide |
-| `SETUP.md` | Detailed instructions |
-| `USAGE_EXAMPLES.md` | Code examples |
-| `IMPLEMENTATION_GUIDE.md` | Technical details |
+### [Usage Examples](USAGE_EXAMPLES.md)
+Real-world examples showing how to use each MCP tool. Includes code snippets and expected responses.
 
-## Support
+### [Implementation Guide](IMPLEMENTATION_GUIDE.md)
+Technical deep dive into the implementation, architecture decisions, and how the MCP server interacts with Home Assistant's REST API.
 
-- Check `test_api.py` output for connection issues
-- Review Home Assistant logs for API errors
-- Verify token permissions in HA
-- Check Cursor MCP logs for server errors
+### [Addon Installation](ADDON_INSTALLATION.md)
+Complete guide for installing the MCP server as a Home Assistant addon. Includes configuration, troubleshooting, and usage instructions.
 
-## Success Criteria
+### [Addon Structure](ADDON_STRUCTURE.md)
+Detailed explanation of the addon's directory structure, key files, build process, and runtime behavior. Essential for understanding how the addon works.
 
-You'll know it's working when you can:
-- ✅ Ask Cursor "list my automations" and get results
-- ✅ Create automations via natural language
-- ✅ Update existing automations
-- ✅ See automation details
+### [Addon Build Guide](ADDON_BUILD.md)
+Instructions for building and deploying the addon using GitHub Actions. Includes setup for automated builds and Docker Hub integration.
+
+### [Addon Setup Summary](ADDON_SETUP_SUMMARY.md)
+Overview of all addon-related files, their purposes, and the complete setup process from development to deployment.
+
+## 🔗 Related Resources
+
+- **Main README**: See the root [README.md](../README.md) for project overview
+- **Changelog**: See [CHANGELOG.md](../CHANGELOG.md) for version history
+- **License**: See [LICENSE](../LICENSE) for licensing information
+
+## 💡 Tips
+
+- **New to MCP?** Start with [Quick Start Guide](QUICK_START.md)
+- **Installing as addon?** Read [Addon Installation](ADDON_INSTALLATION.md) first
+- **Having issues?** Check the troubleshooting sections in [Setup Guide](SETUP.md) and [Addon Installation](ADDON_INSTALLATION.md)
+- **Want to contribute?** Read [Implementation Guide](IMPLEMENTATION_GUIDE.md) and [Addon Structure](ADDON_STRUCTURE.md)
 
 ---
 
-**Ready to start?** → See `QUICK_START.md`
+**Need help?** Check the troubleshooting sections in the relevant guides or open an issue on GitHub.

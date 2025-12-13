@@ -86,6 +86,7 @@ In Cursor, you can now:
 
 ## Next Steps
 
-- Read `SETUP.md` for detailed setup
-- Check `USAGE_EXAMPLES.md` for examples
-- Read `IMPLEMENTATION_GUIDE.md` for advanced topics
+- [Setup Guide](SETUP.md) - Detailed setup instructions
+- [Usage Examples](USAGE_EXAMPLES.md) - Code examples and use cases
+- [Implementation Guide](IMPLEMENTATION_GUIDE.md) - Technical deep dive
+- [Documentation Index](SUMMARY.md) - Complete documentation navigation

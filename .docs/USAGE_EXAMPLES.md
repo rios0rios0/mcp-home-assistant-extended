@@ -1,5 +1,12 @@
 # Usage Examples
 
+This document provides practical examples of using the MCP HA Extended tools.
+
+For setup instructions, see:
+- [Quick Start Guide](QUICK_START.md) - Fast setup
+- [Setup Guide](SETUP.md) - Detailed setup
+- [Addon Installation](ADDON_INSTALLATION.md) - Install as addon
+
 ## Example 1: List All Automations
 
 ```python
@@ -198,3 +205,11 @@ Once configured, you can ask Cursor:
 ```
 
 Cursor will use the MCP tools automatically!
+
+## Related Documentation
+
+- [Quick Start Guide](QUICK_START.md) - Fast setup guide
+- [Setup Guide](SETUP.md) - Detailed setup instructions
+- [Implementation Guide](IMPLEMENTATION_GUIDE.md) - Technical details
+- [Addon Installation](ADDON_INSTALLATION.md) - Install as Home Assistant addon
+- [Documentation Index](SUMMARY.md) - Complete documentation navigation
