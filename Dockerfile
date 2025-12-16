@@ -25,20 +25,14 @@ WORKDIR /usr/src
 ARG BUILD_ARCH
 
 # Install system dependencies
+# Note: bash, jq, tzdata, curl, ca-certificates are already in base image
 RUN set -x \
-    && apt-get update \
-    && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
-         bash \
-         jq \
-         tzdata \
-         curl \
-         ca-certificates \
+    && apk add --no-cache \
          git \
          python3 \
-         python3-pip \
-         python3-venv \
-         xz-utils \
-    && rm -rf /var/lib/apt/lists/*
+         py3-pip \
+         xz \
+    && rm -rf /var/cache/apk/*
 
 # Install S6 Overlay, bashio, tempio
 RUN set -x \
@@ -71,7 +65,7 @@ RUN set -x \
        | tar -xzf - --strip 1 -C /usr/src/bashio \
     && mv /usr/src/bashio/lib /usr/lib/bashio \
     && ln -s /usr/lib/bashio/bashio /usr/bin/bashio \
-    && rm -rf /var/lib/apt/lists/* /usr/src/bashio
+    && rm -rf /usr/src/bashio
 
 # Copy application files
 WORKDIR /app
