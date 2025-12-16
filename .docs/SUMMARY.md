@@ -94,7 +94,7 @@ Complete guide for installing the MCP server as a Home Assistant addon. Includes
 Detailed explanation of the addon's directory structure, key files, build process, and runtime behavior. Essential for understanding how the addon works.
 
 ### [Addon Build Guide](ADDON_BUILD.md)
-Instructions for building and deploying the addon using GitHub Actions. Includes setup for automated builds and Docker Hub integration.
+Instructions for building and deploying the addon using GitHub Actions. Includes setup for automated builds and GitHub Container Registry integration.
 
 ### [Addon Setup Summary](ADDON_SETUP_SUMMARY.md)
 Overview of all addon-related files, their purposes, and the complete setup process from development to deployment.

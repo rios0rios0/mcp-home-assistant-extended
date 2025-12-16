@@ -76,7 +76,7 @@ All documentation is organized in the [`.docs`](.docs/) folder:
 
 ### Option 1: Home Assistant Addon (Recommended)
 
-Easiest installation method. The addon is automatically built and published to Docker Hub.
+Easiest installation method. The addon is automatically built and published to GitHub Container Registry.
 
 **Repository**: `https://github.com/rios0rios0/mcp-home-assistant-extended`
 
@@ -140,7 +140,7 @@ MIT License - see [LICENSE](LICENSE) file for details.
 ## Links
 
 - **GitHub Repository**: https://github.com/rios0rios0/mcp-home-assistant-extended
-- **Docker Hub**: rios0rios0/mcp-home-assistant-extended
+- **Container Registry**: ghcr.io/rios0rios0/mcp-home-assistant-extended
 - **Documentation**: [.docs/SUMMARY.md](.docs/SUMMARY.md)
 
 ## Support

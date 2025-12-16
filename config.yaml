@@ -15,7 +15,7 @@ homeassistant: 2024.6.0
 host_ipc: false
 host_network: false
 host_dbus: false
-image: rios0rios0/{arch}-addon-mcp-home-assistant-extended
+image: ghcr.io/rios0rios0/mcp-home-assistant-extended/{arch}-addon
 ingress: false
 init: false
 map:

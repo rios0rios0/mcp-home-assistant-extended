@@ -1,12 +1,12 @@
 # GitHub Actions Setup
 
-This repository includes automated builds via GitHub Actions that build and push Docker images to Docker Hub.
+This repository includes automated builds via GitHub Actions that build and push Docker images to GitHub Container Registry (GHCR).
 
 ## Configuration
 
-- **Registry**: `rios0rios0`
-- **Image Name**: `mcp-home-assistant-extended`
-- **Image Pattern**: `rios0rios0/{arch}-addon-mcp-home-assistant-extended`
+- **Registry**: `ghcr.io`
+- **Image Name**: `rios0rios0/mcp-home-assistant-extended`
+- **Image Pattern**: `ghcr.io/rios0rios0/mcp-home-assistant-extended/{arch}-addon`
 
 Where `{arch}` is one of: `aarch64`, `armv7`, `amd64`
 
@@ -32,22 +32,13 @@ The workflow (`.github/workflows/build.yaml`) automatically:
 
 ## Setup Instructions
 
-### 1. Configure GitHub Secrets
+### 1. No Additional Configuration Needed
 
-Before the workflow can push images, you need to set up Docker Hub credentials:
-
-1. Go to your repository on GitHub
-2. Navigate to **Settings** → **Secrets and variables** → **Actions**
-3. Click **New repository secret**
-4. Add the following secrets:
-   - **Name**: `DOCKER_USERNAME`
-     - **Value**: Your Docker Hub username (`rios0rios0`)
-   - **Name**: `DOCKER_PASSWORD`
-     - **Value**: Your Docker Hub access token (create one at https://hub.docker.com/settings/security)
+The workflow automatically uses GitHub's built-in `GITHUB_TOKEN` to authenticate with GitHub Container Registry. No additional secrets are required as GitHub Actions has permissions to publish container images to the repository's container registry by default.
 
 ### 2. Push to GitHub
 
-Once secrets are configured, push your code to trigger the build:
+Push your code to trigger the build:
 
 ```bash
 git add .
@@ -62,15 +53,15 @@ git push origin main
 
 - View build progress: **Actions** tab in your GitHub repository
 - Check build logs for any issues
-- Images will be pushed to Docker Hub automatically on successful builds
+- Images will be pushed to GitHub Container Registry automatically on successful builds
 
 ## Image URLs
 
 After a successful build, images will be available at:
 
-- `rios0rios0/aarch64-addon-mcp-home-assistant-extended:latest`
-- `rios0rios0/armv7-addon-mcp-home-assistant-extended:latest`
-- `rios0rios0/amd64-addon-mcp-home-assistant-extended:latest`
+- `ghcr.io/rios0rios0/mcp-home-assistant-extended/aarch64-addon:latest`
+- `ghcr.io/rios0rios0/mcp-home-assistant-extended/armv7-addon:latest`
+- `ghcr.io/rios0rios0/mcp-home-assistant-extended/amd64-addon:latest`
 
 ## Version Tags
 
@@ -82,27 +73,27 @@ git push origin v0.1.0
 ```
 
 This will build and tag images with:
-- `rios0rios0/{arch}-addon-mcp-home-assistant-extended:0.1.0`
-- `rios0rios0/{arch}-addon-mcp-home-assistant-extended:0.1`
+- `ghcr.io/rios0rios0/mcp-home-assistant-extended/{arch}-addon:0.1.0`
+- `ghcr.io/rios0rios0/mcp-home-assistant-extended/{arch}-addon:0.1`
 
 ## Troubleshooting
 
 ### Build fails with authentication error
 
-- Verify `DOCKER_USERNAME` and `DOCKER_PASSWORD` secrets are set correctly
-- Ensure the Docker Hub access token has write permissions
-- Check that the token hasn't expired
+- The workflow uses GitHub's built-in `GITHUB_TOKEN` which should work automatically
+- Verify the repository has the `packages: write` permission in the workflow file
+- Check that the workflow is running on the correct repository
 
 ### Build fails with "platform not supported"
 
 - The workflow uses QEMU for cross-platform builds
 - This is handled automatically by the `docker/setup-qemu-action`
 
-### Images not appearing on Docker Hub
+### Images not appearing in GitHub Container Registry
 
 - Check the Actions tab for build errors
 - Verify the workflow completed successfully
-- Ensure you're looking at the correct Docker Hub repository
+- Check the "Packages" section in your GitHub repository
 
 ## Local Testing
 
