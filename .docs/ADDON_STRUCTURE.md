@@ -62,7 +62,7 @@ Service shutdown script for cleanup (if needed)
 
 For detailed build instructions, see the [Addon Build Guide](ADDON_BUILD.md).
 
-1. **Using GitHub Actions** (Recommended): Automatic builds and pushes to Docker Hub on push to main/master or when tags are created
+1. **Using GitHub Actions** (Recommended): Automatic builds and pushes to GitHub Container Registry on push to main/master or when tags are created
 2. **Using build.sh**: Local script for manual building and testing
 3. **Using Docker directly**: More control over build parameters
 

@@ -54,7 +54,7 @@ This document summarizes the files created to convert the MCP HA Extended Python
 9. **[ADDON_BUILD.md](ADDON_BUILD.md)** - Build and deployment guide
    - GitHub Actions setup
    - Manual build instructions
-   - Docker Hub integration
+   - GitHub Container Registry integration
 
 10. **[CHANGELOG.md](../CHANGELOG.md)** - Version history
 
@@ -84,7 +84,7 @@ For detailed build instructions, see [Addon Build Guide](ADDON_BUILD.md).
 
 ### 4. Deploy
 
-The addon is configured to automatically build and push images to Docker Hub via GitHub Actions. See [Addon Build Guide](ADDON_BUILD.md) for setup instructions.
+The addon is configured to automatically build and push images to GitHub Container Registry via GitHub Actions. See [Addon Build Guide](ADDON_BUILD.md) for setup instructions.
 
 For installation in Home Assistant, see [Addon Installation](ADDON_INSTALLATION.md).
 
