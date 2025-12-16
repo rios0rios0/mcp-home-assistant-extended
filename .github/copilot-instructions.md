@@ -66,7 +66,7 @@ The server acts as a bridge between MCP-compatible clients (like Cursor IDE) and
 
 ### Python Style
 - Line length: **100 characters** (configured in pyproject.toml)
-- Target: Python 3.10+ (use modern type hints: `dict | None` instead of `Optional[dict]`)
+- Target: Python 3.10+ (use modern type hints: `str | None` instead of `Optional[str]`, `dict[str, Any]` for dictionaries)
 - Use type hints for all function signatures
 - Use descriptive variable names
 - Follow PEP 8 conventions (enforced by Black and Ruff)
@@ -147,15 +147,17 @@ Tool(
 - Mock external dependencies (Home Assistant API calls)
 - Use `AsyncMock` for async functions
 - Test both success and error paths
+- This project uses test classes (not standalone functions)
 - Example pattern:
   ```python
-  @pytest.mark.asyncio
-  async def test_function_name(self):
-      with patch("mcp_ha_extended.server.HA_TOKEN", "test_token"):
-          mock_response = AsyncMock()
-          # ... setup mock
-          result = await function_under_test()
-          assert result == expected_value
+  class TestFeature:
+      @pytest.mark.asyncio
+      async def test_function_name(self):
+          with patch("mcp_ha_extended.server.HA_TOKEN", "test_token"):
+              mock_response = AsyncMock()
+              # ... setup mock
+              result = await function_under_test()
+              assert result == expected_value
   ```
 
 ### Manual Testing
