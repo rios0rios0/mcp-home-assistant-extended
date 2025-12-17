@@ -74,10 +74,15 @@ COPY src/ ./src/
 
 # Install Python dependencies
 RUN set -x \
+    && apk add --no-cache --virtual .build-deps \
+         gcc \
+         musl-dev \
+         python3-dev \
     && pip3 install --no-cache-dir --break-system-packages \
          pdm \
     && pdm config python.use_venv false \
     && pdm install --prod --no-self \
+    && apk del .build-deps \
     && rm -rf /root/.cache/pdm
 
 # S6-Overlay
