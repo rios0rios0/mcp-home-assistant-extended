@@ -64,7 +64,7 @@ RUN set -x \
     && curl -L -f -s "https://github.com/hassio-addons/bashio/archive/v${BASHIO_VERSION}.tar.gz" \
        | tar -xzf - --strip 1 -C /usr/src/bashio \
     && mv /usr/src/bashio/lib /usr/lib/bashio \
-    && ln -s /usr/lib/bashio/bashio /usr/bin/bashio \
+    && ln -sf /usr/lib/bashio/bashio /usr/bin/bashio \
     && rm -rf /usr/src/bashio
 
 # Copy application files
