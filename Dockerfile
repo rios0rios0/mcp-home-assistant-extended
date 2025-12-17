@@ -77,7 +77,6 @@ RUN set -x \
     && pip3 install --no-cache-dir --break-system-packages \
          pdm \
     && pdm config python.use_venv false \
-    && pdm config python.path /usr/bin/python3 \
     && pdm install --prod --no-self \
     && rm -rf /root/.cache/pdm
 
