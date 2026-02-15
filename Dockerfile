@@ -29,6 +29,7 @@ ARG BUILD_ARCH
 RUN set -x \
     && apk add --no-cache \
          git \
+         libffi \
          python3 \
          py3-pip \
          xz \
@@ -75,8 +76,11 @@ COPY src/ ./src/
 # Install Python dependencies
 RUN set -x \
     && apk add --no-cache --virtual .build-deps \
+         cargo \
          gcc \
+         libffi-dev \
          musl-dev \
+         openssl-dev \
          python3-dev \
     && pip3 install --no-cache-dir --break-system-packages \
          pdm \
